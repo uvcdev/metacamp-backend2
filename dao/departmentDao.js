@@ -5,11 +5,7 @@ const dao = {
   // 등록
   insert(params) {
     return new Promise((resolve, reject) => {
-      Department.create({
-        name: params.name,
-        code: params.code,
-        description: params.description,
-      }).then((inserted) => {
+      Department.create(params).then((inserted) => {
         resolve(inserted);
       }).catch((err) => {
         reject(err);

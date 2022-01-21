@@ -27,7 +27,7 @@ module.exports = class User extends Sequelize.Model {
       phone: {
         type: Sequelize.STRING(255),
       },
-      updated_pw_date: {
+      updatedPwDate: {
         type: Sequelize.DATE,
       },
     }, {

@@ -5,15 +5,10 @@ const dao = {
   // 등록
   insert(params) {
     return new Promise((resolve, reject) => {
-      User.create({
-        departmentId: params.departmentId,
-        name: params.name,
-        userid: params.userid,
-        password: params.password,
-        role: params.role,
-        email: params.email,
-        phone: params.phone,
-      }).then((inserted) => {
+      User.create(params).then((inserted) => {
+        // password는 제외하고 리턴함
+        const insertedResult = { ...inserted };
+        delete insertedResult.dataValues.password;
         resolve(inserted);
       }).catch((err) => {
         reject(err);
@@ -43,6 +38,7 @@ const dao = {
     return new Promise((resolve, reject) => {
       User.findAndCountAll({
         ...setQuery,
+        attributes: { exclude: ['password'] }, // password 필드 제외
         include: [
           {
             model: Department,
@@ -61,6 +57,9 @@ const dao = {
     return new Promise((resolve, reject) => {
       User.findByPk(
         params.id,
+        {
+          attributes: { exclude: ['password'] }, // password 필드 제외
+        },
       ).then((selectedInfo) => {
         resolve(selectedInfo);
       }).catch((err) => {
@@ -90,6 +89,19 @@ const dao = {
         where: { id: params.id },
       }).then((deleted) => {
         resolve({ deletedCount: deleted });
+      }).catch((err) => {
+        reject(err);
+      });
+    });
+  },
+  // 로그인을 위한 사용자 조회
+  selectUser(params) {
+    return new Promise((resolve, reject) => {
+      User.findOne({
+        attributes: ['id', 'userid', 'password', 'name', 'role'],
+        where: { userid: params.userid },
+      }).then((selectedOne) => {
+        resolve(selectedOne);
       }).catch((err) => {
         reject(err);
       });
