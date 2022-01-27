@@ -79,6 +79,7 @@ router.get('/:id', isLoggedIn, async (req, res) => {
 router.put('/:id', isLoggedIn, async (req, res) => {
   try {
     const params = {
+      id: req.params.id,
       name: req.body.name,
       deviceModelName: req.body.deviceModelName,
       manufacturer: req.body.manufacturer,
