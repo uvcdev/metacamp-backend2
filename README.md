@@ -1432,6 +1432,7 @@ module.exports = class User extends Sequelize.Model {
 즉, **User : Department = N : 1**의 관계이다.
 
 **관계설정 종류** https://sequelize.org/docs/v6/advanced-association-concepts/creating-with-associations/
+
 `BelongsTo(N:1) / HasMany(1:N) / HasOne(1:1) / BelongsToMany(N:M)`
 
 **참고** User와 Department가 서로 관계가 있을때 둘 중 하나만 관계를 써주면 어떻게 되는가?
