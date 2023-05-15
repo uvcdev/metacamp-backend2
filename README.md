@@ -1431,6 +1431,9 @@ module.exports = class User extends Sequelize.Model {
 
 즉, **User : Department = N : 1**의 관계이다.
 
+**관계설정 종류** https://sequelize.org/docs/v6/advanced-association-concepts/creating-with-associations/
+`BelongsTo(N:1) / HasMany(1:N) / HasOne(1:1) / BelongsToMany(N:M)`
+
 **참고** User와 Department가 서로 관계가 있을때 둘 중 하나만 관계를 써주면 어떻게 되는가?
 --> 둘 중 하나만 관계를 써줘도 FK가 맺어진다. 다만, sequelize를 통해 해당 모델을 사용할때 관계를 맺어주지 않으면 join(`include기능`)을 사용할 수 없다. 
 
@@ -1641,7 +1644,7 @@ router.get('/', async (req, res) => {
     res.status(500).json({ err: err.toString() });
   }
 });
-
+// 상세조회, 수정, 삭제 (실습으로 구현할 것)
 module.exports = router;
 ```
 
