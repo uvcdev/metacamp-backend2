@@ -2315,7 +2315,59 @@ router.get('/', isLoggedIn, async (req, res) => {
 
 module.exports = router;
 ```
+## 게시글 관리 (with token)
+게시글 관리 프로세스를 토큰 검증을 넣어서 만들어 보자.
 
+게시글관리 테이블은 다음과 같다
+**post**
+|속성명|필드명|타입|기타|
+|------|---|---|---|
+|pk|id|int||
+|제목|title|varchar(255)|not null|
+|내용|content|TEXT||
+|작성자|user_id|integer||
+|조회수|view_count|varchar(20)||
+|등록일시|created_at|datetime||
+|수정일시|updated_at|datetime||
+|삭제일시|deleted_at|datetime||
+
+
+### Router에 middlware를 이용해서 토큰 검증(로그인 확인) 하기
+Dao와 Service는 동일한 로직으로 만들면 되고 Router에서 다음과 같이 미들웨어 방식으로 `isLoggedIn`함수를 사용하면 된다.
+
+> /routes/device.js
+```javascript
+const express = require('express');
+
+const router = express.Router();
+const logger = require('../lib/logger');
+const { isLoggedIn } = require('../lib/middleware');
+const deviceService = require('../service/deviceService');
+
+...(중간생략)...
+
+// 리스트 조회
+router.get('/', isLoggedIn, async (req, res) => {
+  try {
+    const params = {
+      name: req.query.name,
+    };
+    logger.info(`(device.list.params) ${JSON.stringify(params)}`);
+
+    const result = await deviceService.list(params);
+    logger.info(`(device.list.result) ${JSON.stringify(result)}`);
+
+    // 최종 응답
+    res.status(200).json(result);
+  } catch (err) {
+    res.status(500).json({ err: err.toString() });
+  }
+});
+
+...(중간생략)...
+
+module.exports = router;
+```
 ##### 토큰 테스트 팁
 postman을 이용해서 백엔드를 테스트 할때에는 토큰 검증이 들어가게 되면 2시간마다 토큰을 교체해야 하는 불편함이 따른다. 이를 대체하기 위해 1년짜리 토큰을 발행해서 테스트 하면 편리하게 이용할 수 있다.
 
