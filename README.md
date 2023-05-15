@@ -210,6 +210,7 @@ eslint의 설정 파일은 다음과 같다.
 
 ## VScode 설정
 VSCode의 설정은 다음과 같이 생성해 준다.
+VsCode에서 `ctrl+shift+p` 입력 후 `workspace setting(JSON)` 검색
 
 > /.vscode/settings.json
 ```json
