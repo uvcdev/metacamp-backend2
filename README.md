@@ -2325,7 +2325,7 @@ module.exports = router;
 |pk|id|int||
 |제목|title|varchar(255)|not null|
 |내용|content|TEXT||
-|작성자|user_id|integer||
+|작성자|user_id|integer|FK(user.id)|
 |조회수|view_count|varchar(20)||
 |등록일시|created_at|datetime||
 |수정일시|updated_at|datetime||
@@ -2342,7 +2342,7 @@ const express = require('express');
 const router = express.Router();
 const logger = require('../lib/logger');
 const { isLoggedIn } = require('../lib/middleware');
-const deviceService = require('../service/deviceService');
+const userService = require('../service/userService');
 
 ...(중간생략)...
 
@@ -2350,11 +2350,11 @@ const deviceService = require('../service/deviceService');
 router.get('/', isLoggedIn, async (req, res) => {
   try {
     const params = {
-      name: req.query.name,
+      title: req.query.title,
     };
     logger.info(`(device.list.params) ${JSON.stringify(params)}`);
 
-    const result = await deviceService.list(params);
+    const result = await userService.list(params);
     logger.info(`(device.list.result) ${JSON.stringify(result)}`);
 
     // 최종 응답
