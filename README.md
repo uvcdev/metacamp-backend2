@@ -1,6 +1,6 @@
-# metacamp-backend2
+# metacamp-backend
 
-메타캠프 백엔드2 - MVC패턴 버전
+메타캠프 백엔드 - MVC패턴 버전
 
 # 전체 구조
 ```
@@ -68,7 +68,7 @@
 위 디렉토리로 이동 한다.
 
 
-## node.js 설치
+## node.js 설치 (ppt 1.NVM 참고)
 version: v14.15.4
 (nvm을 이용하여 버전관리 할 것. (윈도우용 nvm: [https://github.com/coreybutler/nvm-windows/releases](https://github.com/coreybutler/nvm-windows/releases) ))
 
@@ -271,7 +271,7 @@ DB_DIALECT=postgres
 # 라이브러리 설치
 필수적인 라이브러리들을 다음과 같이 설치해서 사용하도록 한다.
 
-## dotenv
+## dotenv (ppt 2. 환경변수 .env 참고)
 `.env`파일을 사용하기 위해 `dotenv` 라이브러리를 설치한다.
 
 ### dotenv 설치
@@ -659,6 +659,24 @@ Model의 요소는 다음과 같다.
 > `freezeTableName` : true면 table 이름의 복수형 생성을 막는다.  
 > `tableName` : table 이름을 수동으로 생성 한다. 
 > `comment` : table 에 대한 comment
+> 
+> ----------
+> 
+> **추가 설명** 주로 사용하는 DataType은 다음과 같다.(https://sequelize.org/docs/v6/core-concepts/model-basics/#data-types 참고)
+> **문자열 STRING**
+>`STRING` : 문자열, VARCHAR(255)
+>`STRING(1234)` : 문자열, VARCHAR(1234)
+>`TEXT` : 사이즈가 없는 문자열, TEXT(사이즈 및 속도를 고려하며 사용할 것, VARCHAR보다 느림)
+> **BOOLEAN**
+>`BOOLEAN` : 참/거짓, TINYINT(1) 
+> **숫자형 NUBMER**
+>`INTEGER` : 정수형, INTEGER 
+>`FLOAT` : 실수형, FLOAT (근사값 저장 형식이기 때문에 정확한 계산이 필요한 경우 사용하지말것)
+>`DOUBLE` : 실수형, DOUBLE (FLOAT와의 차이 알아볼 것) 
+>`DECIMAL` : 소수점 이하의 정밀한 숫자 값을 저장, DECIMAL (정확한 값이 필요할 때 사용, 데이터 사이즈가 크며 모든 숫자형 데이터중 가장 느림)
+>`STRING` : 
+
+
 
 ### 모델 index 파일 생성
 모델을 생성하기 위해 index파일을 생성 한다.
@@ -720,8 +738,8 @@ Executing (default): SELECT i.relname AS name, ix.indisprimary AS primary, ix.in
 ```
 
 # CRUD 구조
-
 본 프로젝트는 자바스프링의 MVC 구조를 모방한다.
+(MVC 구조를 통해 애플리케이션의 관심사를 분리하여 유연하고 확장 가능한 웹 애플리케이션 개발이 가능함)
 프로세스의 흐름은 Controller --> Service --> DAO의 순서를 따르며
 각 구조별 파일명은 다음과 같다. (예: Department)
 
@@ -1830,6 +1848,7 @@ url: /users/<:id>
 ### hash 처리 함수 만들기
 hash(비번만들기용)을 만들고 이를 확인(비번확인용)하는 함수를 만들어 보자.
 
+''**hash**가 궁금하다면 chatGPT를 활용해보자.''
 > /lib/hashUtil.js
 ```javascript
 const crypto = require('crypto');
